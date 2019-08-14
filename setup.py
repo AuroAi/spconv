@@ -55,7 +55,7 @@ class CMakeBuild(build_ext):
             # but will remove raw half operators.
             cuda_flags += ["-D__CUDA_NO_HALF_OPERATORS__", "-D__CUDA_NO_HALF_CONVERSIONS__"]
             cuda_flags += ["-D__CUDA_NO_HALF2_OPERATORS__"] 
-            cuda_flags += ["-gencode arch=compute_61,code=sm_61 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_75,code=sm_75"] 
+            #cuda_flags += ["-gencode arch=compute_61,code=sm_61 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_75,code=sm_75"] 
             cmake_args += ['-DCMAKE_CUDA_FLAGS=' + " ".join(cuda_flags)]
         cfg = 'Debug' if self.debug else 'Release'
         assert cfg == "Release", "pytorch ops don't support debug build."
