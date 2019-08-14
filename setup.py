@@ -41,12 +41,13 @@ class CMakeBuild(build_ext):
 
     def build_extension(self, ext):
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
+        FORCE_BUILD_WITH_CUDA = os.environ.get( 'FORCE_BUILD_WITH_CUDA', None )
         cmake_args = [# '-G "Visual Studio 15 2017 Win64"',
                       '-DCMAKE_PREFIX_PATH={}'.format(LIBTORCH_ROOT),
                       '-DPYBIND11_PYTHON_VERSION={}'.format(PYTHON_VERSION),
                       '-DSPCONV_BuildTests=OFF',
                       ] #  -arch=sm_61
-        if not torch.cuda.is_available():
+        if not torch.cuda.is_available() and not FORCE_BUILD_WITH_CUDA:
             cmake_args += ['-DSPCONV_BuildCUDA=OFF']
         else:
             cuda_flags = ["\"--expt-relaxed-constexpr\""]
